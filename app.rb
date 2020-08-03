@@ -61,9 +61,8 @@ class NMostRecentHomeBusApp < HomeBusApp
     }
 
     if options[:verbose]
-      pp @payload
+      pp payload
     end
-
 
     publish! DDC, payload
 
@@ -79,7 +78,7 @@ class NMostRecentHomeBusApp < HomeBusApp
   end
 
   def _save_state
-    File.open(STATE_FILENAME, 'w') { |f| f.write JSON.pretty_generate(@msgs) }
+    File.open(STATE_FILENAME, 'w') { |f| f.write(JSON.pretty_generate(@msgs)) }
   end
 
   def manufacturer
