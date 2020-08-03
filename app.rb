@@ -70,7 +70,7 @@ class NMostRecentHomeBusApp < HomeBusApp
   end
 
   def _save_state
-    File.open(STATE_FILE, 'w') { |f| f.write JSON.generate_pretty(@msgs) }
+    File.open(STATE_FILENAME, 'w') { |f| f.write JSON.generate_pretty(@msgs) }
   end
 
   def manufacturer
