@@ -42,25 +42,34 @@ class NMostRecentHomeBusApp < HomeBusApp
 
   def receive!(msg)
     if options[:verbose]
-      puts msg
+      puts 'received', msg
     end
 
     @msgs.push msg
     _prune_msgs
 
     if options[:verbose]
-      pp @msgs
+      puts 'about to save'
     end
 
     _save_state
 
     payload = {
-      n: @n,
-      source: @source_uuid,
-      last_n: @msgs
+     max_length: @n,
+     source: @source_uuid,
+     queue: @msgs
     }
 
+    if options[:verbose]
+      pp @payload
+    end
+
+
     publish! DDC, payload
+
+    if options[:verbose]
+      puts 'published!'
+    end
   end
 
   def _restore_state
