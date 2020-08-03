@@ -60,7 +60,7 @@ class NMostRecentHomeBusApp < HomeBusApp
       last_n: @msgs
     }
 
-    publish_to! DDC, payload
+    publish! DDC, payload
   end
 
   def _restore_state
