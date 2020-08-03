@@ -6,6 +6,9 @@ require 'dotenv'
 require 'json'
 
 class NMostRecentHomeBusApp < HomeBusApp
+  DDC = 'org.homebus.experimental.component.queue'
+  STATE_FILENAME = '.saved-state.json'
+
   def initialize(options)
     @options = options
     super
@@ -16,6 +19,8 @@ class NMostRecentHomeBusApp < HomeBusApp
     @subscribed = false
 
     @msgs = []
+
+    _restore_state
   end
 
   def setup!
@@ -47,7 +52,25 @@ class NMostRecentHomeBusApp < HomeBusApp
       pp @msgs
     end
 
-    publish! JSON.generate @msgs
+    _save_state
+
+    payload = {
+      n: @n,
+      source: @source_uuid,
+      last_n: @msgs
+    }
+
+    publish_to! DDC, payload
+  end
+
+  def _restore_state
+    if File.exists? STATE_FILENAME
+      @msgs = JSON.parse File.read(STATE_FILENAME), symbolize_names: true
+    end
+  end
+
+  def _save_state
+    File.open(STATE_FILE, 'w') { |f| f.write JSON.generate_pretty(@msgs) }
   end
 
   def manufacturer
