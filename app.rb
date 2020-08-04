@@ -15,6 +15,7 @@ class NMostRecentHomeBusApp < HomeBusApp
 
     Dotenv.load('.env')
     @source_uuid = ENV['SOURCE_UUID']
+    @source_ddc = ENV['SOURCE_DDC']
     @n = ENV['N'].to_i
     @subscribed = false
 
@@ -28,7 +29,7 @@ class NMostRecentHomeBusApp < HomeBusApp
 
   def work!
     unless @subscribed
-      subscribe_to_devices! @source_uuid
+      subscribe_to_source_ddc! @source_uuid, @ddc
     end
 
     listen!
@@ -57,6 +58,7 @@ class NMostRecentHomeBusApp < HomeBusApp
     payload = {
      max_length: @n,
      source: @source_uuid,
+     ddc: @source_ddc,
      queue: @msgs
     }
 
