@@ -29,7 +29,7 @@ class NMostRecentHomeBusApp < HomeBusApp
 
   def work!
     unless @subscribed
-      subscribe_to_source_ddc! @source_uuid, @ddc
+      subscribe_to_source_ddc! @source_uuid, @source_ddc
     end
 
     listen!
@@ -46,7 +46,7 @@ class NMostRecentHomeBusApp < HomeBusApp
       puts 'received', msg
     end
 
-    @msgs.push msg
+    @msgs.push({ ddc: ddc, payload: msg[:payload] })
     _prune_msgs
 
     if options[:verbose]
