@@ -46,7 +46,7 @@ class NMostRecentHomeBusApp < HomeBusApp
       puts 'received', msg
     end
 
-    @msgs.push({ ddc: ddc, payload: msg[:payload] })
+    @msgs.push({ ddc: msg[:ddc], payload: msg[:payload] })
     _prune_msgs
 
     if options[:verbose]
@@ -58,7 +58,7 @@ class NMostRecentHomeBusApp < HomeBusApp
     payload = {
      max_length: @n,
      source: @source_uuid,
-     ddc: @source_ddc,
+     ddc: msg[:ddc],
      queue: @msgs
     }
 
