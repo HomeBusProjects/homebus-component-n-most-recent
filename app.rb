@@ -88,11 +88,11 @@ class NMostRecentHomeBusApp < HomeBusApp
   end
 
   def model
-    'Aggregate Component v1'
+    'Queue Component v1'
   end
 
   def friendly_name
-    'Aggregate Component'
+    'Queue Component'
   end
 
   def friendly_location
@@ -109,7 +109,7 @@ class NMostRecentHomeBusApp < HomeBusApp
 
   def devices
     [
-      { friendly_name: 'Aggregate Component',
+      { friendly_name: 'Queue Component',
         friendly_location: '',
         update_frequency: 0,
         index: 0,
